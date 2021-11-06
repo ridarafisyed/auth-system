@@ -1,16 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import {
+    Avatar,
+    Button, 
+    Paper,
+    Grid,
+    Box,
+    Typography,
+    TextField,
+
+} from '@mui/material';
+
 const Home = () => (
-    <div className='container'>
-        <div class='jumbotron mt-5'>
-            <h1 class='display-4 mt-3'>Welcome to Dextera!</h1>
-            <p class='lead'>The Law firm!</p>
-            <hr class='my-4' />
+    <Grid>
+        <Box
+            sx={{
+                my: 15,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                }}>
+            <Typography component="h1" variant="h3">
+                Welcome to Dextera            
+            </Typography>
+            <Typography component="h3" variant="h5">
+                The Law Firm             
+            </Typography>
             
-            <Link class='btn btn-primary btn-lg' to='/login' role='button'>Login</Link>
-        </div>
-    </div>
+            
+            <Button component={Link} 
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }} to='/login' role='button'>Login</Button>
+        </Box>
+    </Grid>
 );
 
 export default Home;

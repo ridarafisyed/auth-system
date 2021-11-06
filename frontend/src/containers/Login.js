@@ -3,73 +3,129 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
+import {
+    Avatar,
+    Button, 
+    Paper,
+    Grid,
+    Box,
+    Typography,
+    TextField,
+
+} from '@mui/material';
+
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import BackgroundImage from '../asserts/login_light.png'
 
 const Login = ({ login, isAuthenticated }) => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '' 
-    });
 
-    const { email, password } = formData;
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '' 
+});
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const { email, password } = formData;
 
-    const onSubmit = e => {
-        e.preventDefault();
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-        login(email, password);
-    };
+  const onSubmit = e => {
+      e.preventDefault();
 
-
-    if (isAuthenticated) {
-        return <Redirect to='/' />
-    }
+      login(email, password);
+  };
+  if (isAuthenticated) {
+    return <Redirect to='/' />
+}
 
     return (
-        <div className='container d-flex justify-content-center mt-5'>
-            <div className="card p-3 text-center" style={{width:"25rem"}}>
-            <h3>Sign In</h3>
-            <p>Sign into your Account</p>
-            <form onSubmit={e => onSubmit(e)}>
-                <div className='form-group'>
-                    <input
-                        className='form-control mt-3'
-                        type='email'
-                        placeholder='Email'
-                        name='email'
+    <Grid container component="main" sx={{ height: '87vh' }}>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={8}
+          sx={{
+            backgroundImage: `url(${BackgroundImage})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+          <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >                
+            <Avatar sx={{ m: 1, bgcolor: 'warning.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+                <Box component="form" Validate sx={{ mt: 1 }} onSubmit={e => onSubmit(e)}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
                         value={email}
                         onChange={e => onChange(e)}
-                        required
+                        autoComplete="email"
+                        autoFocus
                     />
-                </div>
-                <div className='form-group'>
-                    <input
-                        className='form-control mt-3'
-                        type='password'
-                        placeholder='Password'
-                        name='password'
+                      <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
                         value={password}
                         onChange={e => onChange(e)}
+                        id="password"
                         minLength='6'
-                        required
+                        autoComplete="password"
                     />
-                </div>
-                <button className='btn btn-primary mt-3' type='submit'>Login</button>
-            </form>
-            
-            <p className='mt-3'>
-                Don't have an account? <Link to='/signup'>Sign Up</Link>
-            </p>
-            <p className='mt-3'>
-                Forgot your Password? <Link to='/reset-password'>Reset Password</Link>
-            </p>
-        </div>
-        </div>
+                     <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Sign In
+                    </Button>
+                </Box>
+                <Grid container>
+                <Grid item xs>
+                  <Link to="/reset-password" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link to="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>            
+            </Box>
+            </Grid>
+    </Grid>
     );
 };
 
+
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { login })(Login);

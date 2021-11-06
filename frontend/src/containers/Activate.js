@@ -1,7 +1,22 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { verify } from '../actions/auth';
+
+import {
+    Avatar,
+    Button, 
+    Paper,
+    Grid,
+    Box,
+    Typography,
+    TextField,
+
+} from '@mui/material';
+
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import BackgroundImage from '../asserts/login_light.png'
 
 const Activate = ({ verify, match }) => {
     const [verified, setVerified] = useState(false);
@@ -19,22 +34,26 @@ const Activate = ({ verify, match }) => {
     }
 
     return (
-        <div className='container'>
-            <div 
-                className='d-flex flex-column justify-content-center align-items-center'
-                style={{ marginTop: '200px' }}
-            >
-                <h1>Verify your Account:</h1>
-                <button
-                    onClick={verify_account}
-                    style={{ marginTop: '50px' }}
-                    type='button'
-                    className='btn btn-primary'
-                >
+        <Grid>
+        <Box
+            sx={{
+                my: 15,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                }}>
+            <Typography component="h1" variant="h3">
+            Verify your Account:     
+            </Typography>
+            
+            <Button component={Link} 
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }} to='/login' role='button'>
                     Verify
-                </button>
-            </div>
-        </div>
+                </Button>
+            </Box>
+        </Grid>
     );
 };
 
